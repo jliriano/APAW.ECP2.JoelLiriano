@@ -1,0 +1,16 @@
+language: java
+jdk:
+- oraclejdk8
+branches:
+  only:
+  - master
+  - develop
+notifications:
+  email:
+    recipients:
+    - jd.liriano@alumnos.upm.es
+script:
+# Test
+- mvn verify
+- mvn org.jacoco:jacoco-maven-plugin:prepare-agent verify
+- mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=jliriano-github -Dsonar.login=$SONAR -Dsonar.projectKey=jliriano_APAW.ECP2.JoelLiriano
