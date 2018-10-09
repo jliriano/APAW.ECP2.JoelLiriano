@@ -15,10 +15,21 @@
 ## API
 
 ### POST /publishers
+#### Parámetros del cuerpo
+- `name`: String (**requerido**)
+- `website`: String
+
+#### Respuesta
+- 200 OK 
+  - `id`: String
+- 403 BAD_REQUEST
+
+---
+
 ### GET /publishers/{id}
-### POST /publishers/{id}/games
+### POST /publishers/{id}/games (0..1)
 ### PATCH /publishers/{id}/games/{id}
-### POST /publishers/{id}/reviews
+### POST /publishers/{id}/reviews (0..n)
 ### PUT /publishers/{id}/reviews/{id}
 ### DELETE /publishers/{id}/reviews/{id}
 ### GET /publishers/search?q=gameRating:TEEN
