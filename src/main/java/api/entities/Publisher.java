@@ -6,8 +6,7 @@ public class Publisher {
     private String name;
     private String website;
 
-    public Publisher(String id, String name){
-        this.id = id;
+    public Publisher(String name){
         this.name = name;
     }
 
@@ -29,6 +28,10 @@ public class Publisher {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
