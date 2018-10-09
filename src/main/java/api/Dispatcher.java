@@ -8,11 +8,11 @@ import org.apache.logging.log4j.LogManager;
 
 public class Dispatcher {
 
-    private final String REQUEST_ERROR = "request error: ";
-    private final String METHOD_ERROR = "method error: ";
+    private static final String REQUEST_ERROR = "request error: ";
+    private static final String METHOD_ERROR = "method error: ";
 
     public void submit(HttpRequest request, HttpResponse response) {
-        String error_message = "{'error':'%S'}";
+        String errorMessage = "{'error':'%S'}";
         try {
             switch (request.getMethod()) {
                 case POST:
@@ -30,7 +30,7 @@ public class Dispatcher {
             }
         } catch (Exception exception) {  // Unexpected
             LogManager.getLogger().error(exception.getStackTrace());
-            response.setBody(String.format(error_message, exception));
+            response.setBody(String.format(errorMessage, exception));
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
