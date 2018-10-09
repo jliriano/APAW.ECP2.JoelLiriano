@@ -4,9 +4,9 @@ import api.businessControllers.PublisherBusinessController;
 import api.dtos.PublisherDto;
 import api.exceptions.ArgumentNotValidException;
 
-public class publisherApiController {
+public class PublisherApiController {
 
-    public static final String USERS = "/publishers";
+    public static final String PUBLISHERS = "/publishers";
 
     private PublisherBusinessController publisherBusinessController = new PublisherBusinessController();
 
