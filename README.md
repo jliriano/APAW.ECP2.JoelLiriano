@@ -27,9 +27,20 @@
 ---
 
 ### GET /publishers/{id}
-### POST /publishers/{id}/games (0..1)
+#### Parámetros del cuerpo
+- `id`: String (**requerido**)
+
+#### Respuesta
+- 200 OK 
+  - `{name:String,website:String}`: String
+- 403 BAD_REQUEST
+- 404 NOT_FOUND
+
+---
+
+### POST /publishers/{id}/games
 ### PATCH /publishers/{id}/games/{id}
-### POST /publishers/{id}/reviews (0..n)
+### POST /publishers/{id}/reviews
 ### PUT /publishers/{id}/reviews/{id}
 ### DELETE /publishers/{id}/reviews/{id}
 ### GET /publishers/search?q=gameRating:TEEN
