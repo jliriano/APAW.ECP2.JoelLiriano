@@ -7,6 +7,7 @@ import api.exceptions.ArgumentNotValidException;
 public class PublisherApiController {
 
     public static final String PUBLISHERS = "/publishers";
+    public static final String ID_ID = "/{id}";
 
     private PublisherBusinessController publisherBusinessController = new PublisherBusinessController();
 
@@ -14,6 +15,11 @@ public class PublisherApiController {
         this.validate(publisherDto, "publisherDto");
         this.validate(publisherDto.getName(), "PublisherDto Name");
         return this.publisherBusinessController.create(publisherDto);
+    }
+
+    public PublisherDto read(String id) {
+        this.validate(id, "PublisherId");
+        return this.publisherBusinessController.read(id);
     }
 
     private void validate(Object property, String message) {

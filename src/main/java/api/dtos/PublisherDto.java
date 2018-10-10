@@ -1,9 +1,18 @@
 package api.dtos;
 
+import api.entities.Publisher;
+
 public class PublisherDto {
 
+    private String id;
     private String name;
     private String website;
+
+    public PublisherDto(Publisher publisher) {
+        this.name = publisher.getName();
+        this.id = publisher.getId();
+        this.website = publisher.getWebsite();
+    }
 
     public PublisherDto(String name) {
         this.name = name;
@@ -23,6 +32,10 @@ public class PublisherDto {
 
     public String getWebsite() {
         return website;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
