@@ -59,7 +59,14 @@ class PublishersIT {
 
     @Test
     void testGetPublisherInvalidRequest(){
-        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/invalid").get();
+        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/").get();
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+    }
+
+    @Test
+    void testGetPublisherNotFoundException(){
+        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/238").get();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }

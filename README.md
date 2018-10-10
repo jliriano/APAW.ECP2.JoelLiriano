@@ -27,9 +27,6 @@
 ---
 
 ### GET /publishers/{id}
-#### Parámetros del cuerpo
-- `id`: String (**requerido**)
-
 #### Respuesta
 - 200 OK 
   - `{name:String,website:String}`: String
