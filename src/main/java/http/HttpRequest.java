@@ -21,8 +21,8 @@ public class HttpRequest extends HttpBase {
         this("", HttpMethod.GET);
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(String path) {
+        return new Builder(path);
     }
 
     public String getPath(int order) {
@@ -93,8 +93,9 @@ public class HttpRequest extends HttpBase {
     public static class Builder {
         private HttpRequest httpRequest;
 
-        private Builder() {
+        private Builder(String path) {
             this.httpRequest = new HttpRequest();
+            this.httpRequest.path = path;
         }
 
         public Builder path(String path) {
