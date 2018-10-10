@@ -47,7 +47,7 @@ public class Dispatcher {
         if (request.isEqualsPath(PublisherApiController.PUBLISHERS)) {
             response.setBody(this.publisherApiController.create((PublisherDto) request.getBody()));
         } else {
-            throw new RequestInvalidException("method error: " + request.getMethod());
+            throw new RequestInvalidException(METHOD_ERROR + request.getMethod());
         }
     }
 
