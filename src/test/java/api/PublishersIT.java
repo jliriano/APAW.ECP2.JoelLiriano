@@ -53,8 +53,12 @@ class PublishersIT {
     @Test
     void testGetPublisherById() {
         String id = this.createPublisher();
-        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+id).get();
-        LogManager.getLogger().info(new Client().submit(request));
+        HttpRequest request = getPublisher(id);
+        assertEquals(HttpStatus.OK, new Client().submit(request).getStatus());
+    }
+
+    private HttpRequest getPublisher(String id) {
+        return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+id).body("id:'"+id+"'").get();
     }
 
     private String createPublisher() {
