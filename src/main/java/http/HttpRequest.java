@@ -21,8 +21,12 @@ public class HttpRequest extends HttpBase {
         this("", HttpMethod.GET);
     }
 
-    public String getPath(int order){
-        return this.path.split("/")[order+1];
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public String getPath(int order) {
+        return this.path.split("/")[order + 1];
     }
 
     public boolean isEqualsPath(String pathTemplate) {
@@ -84,10 +88,6 @@ public class HttpRequest extends HttpBase {
     @Override
     public String toString() {
         return this.method.toString() + ' ' + this.path + this.queryParams() + "   " + super.toString();
-    }
-
-    public static Builder builder() {
-        return new Builder();
     }
 
     public static class Builder {
