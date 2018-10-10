@@ -18,6 +18,7 @@ public class PublisherApiController {
     }
 
     public PublisherDto read(String id) {
+        this.validate(id, "PublisherId");
         return this.publisherBusinessController.read(id);
     }
 

@@ -3,6 +3,7 @@ package api;
 import api.apicontrollers.PublisherApiController;
 import api.dtos.PublisherDto;
 import api.exceptions.ArgumentNotValidException;
+import api.exceptions.NotFoundException;
 import api.exceptions.RequestInvalidException;
 import http.HttpRequest;
 import http.HttpResponse;
@@ -37,6 +38,9 @@ public class Dispatcher {
         } catch (ArgumentNotValidException | RequestInvalidException exception) {
             response.setBody(String.format(errorMessage, exception.getMessage()));
             response.setStatus(HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException exception){
+            response.setBody(String.format(errorMessage, exception.getMessage()));
+            response.setStatus(HttpStatus.NOT_FOUND);
         } catch (Exception exception) {  // Unexpected
             LogManager.getLogger().error(exception.getStackTrace());
             response.setBody(String.format(errorMessage, exception));

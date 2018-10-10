@@ -15,7 +15,7 @@ public class PublisherBusinessController {
 
     public PublisherDto read(String id) {
         Publisher publisher = DaoFactory.getFactory().getPublisherDao().read(id).orElseThrow(
-                () -> new NotFoundException("Playlist (" + id + ")"));
+                () -> new NotFoundException("Publisher (" + id + ")"));
         return new PublisherDto(publisher);
     }
 

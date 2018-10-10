@@ -57,6 +57,13 @@ class PublishersIT {
         assertEquals(HttpStatus.OK, new Client().submit(request).getStatus());
     }
 
+    @Test
+    void testGetPublisherInvalidRequest(){
+        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/invalid").get();
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
+        assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
+    }
+
     private HttpRequest getPublisher(String id) {
         return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+id).body("id:'"+id+"'").get();
     }
