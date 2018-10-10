@@ -12,21 +12,21 @@ public abstract class GenericDaoMemory<T> implements GenericDao<T, String> {
 
     private Map<String, T> map;
 
-    private int id;
+    private int idInt;
 
     GenericDaoMemory(Map<String, T> map) {
         this.map = map;
-        this.id = 1;
+        this.idInt = 1;
     }
 
     @Override
     public void save(T entity) {
-        String id = this.getId(entity);
-        if (id == null) {
-            id = String.valueOf(this.id++);
-            this.setId(entity, String.valueOf(id));
+        String idString = this.getId(entity);
+        if (idString == null) {
+            idString = String.valueOf(this.idInt++);
+            this.setId(entity, String.valueOf(idString));
         }
-        this.map.put(id, entity);
+        this.map.put(idString, entity);
         LogManager.getLogger(this.getClass()).debug("   save: " + entity);
     }
 

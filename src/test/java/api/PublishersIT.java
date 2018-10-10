@@ -1,6 +1,6 @@
 package api;
 
-import api.apiControllers.PublisherApiController;
+import api.apicontrollers.PublisherApiController;
 import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
 import api.dtos.PublisherDto;

@@ -1,4 +1,4 @@
-package api.businessControllers;
+package api.businesscontrollers;
 
 import api.daos.DaoFactory;
 import api.dtos.PublisherDto;

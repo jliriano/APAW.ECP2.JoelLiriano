@@ -1,6 +1,6 @@
 package api;
 
-import api.apiControllers.PublisherApiController;
+import api.apicontrollers.PublisherApiController;
 import api.dtos.PublisherDto;
 import api.exceptions.ArgumentNotValidException;
 import api.exceptions.RequestInvalidException;
