@@ -60,7 +60,7 @@ public class Dispatcher {
         if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID)) {
             response.setBody(this.publisherApiController.read(request.getPath(1)));
         } else {
-            throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
+            throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
         }
     }
 
