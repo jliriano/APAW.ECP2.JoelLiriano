@@ -30,7 +30,7 @@ public class Dispatcher {
                     this.doGet(request, response);
                     break;
                 case PUT:
-                    throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
+                    this.doPatch(request, response);
                 case PATCH:
                     throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
                 case DELETE:
@@ -66,6 +66,15 @@ public class Dispatcher {
     private void doGet(HttpRequest request, HttpResponse response) {
         if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID)) {
             response.setBody(this.publisherApiController.read(request.getPath(1)));
+        } else {
+            throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
+        }
+    }
+
+    private void doPatch(HttpRequest request, HttpResponse response) {
+        if (request.isEqualsPath(PublisherApiController.PUBLISHERS + publisherApiController.ID_ID
+        + gameApiController.GAMES + gameApiController.ID_ID + gameApiController.NAME)) {
+            response.setBody(this.gameApiController.update(request.getPath(1), request.getPath(3)));
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
         }
