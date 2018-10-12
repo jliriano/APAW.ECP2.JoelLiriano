@@ -18,13 +18,14 @@ public class GameApiController extends BasicApiController {
         return this.gameBusinessController.create(gameDto);
     }
 
-    public String update(String publisherId, String gameId, GameDto gameDto) {
+    public void updateName(String publisherId, String gameId, GameDto gameDto) {
         this.validate(publisherId, "publisherId");
         this.validate(gameId, "gameId");
         this.validate(gameDto, "gameDto");
+        this.validate(gameDto.getName(), "new Name");
         gameDto.setId(gameId);
         gameDto.setPublisherId(publisherId);
-        return this.gameBusinessController.update(gameDto);
+        this.gameBusinessController.updateName(gameDto);
     }
 
 }

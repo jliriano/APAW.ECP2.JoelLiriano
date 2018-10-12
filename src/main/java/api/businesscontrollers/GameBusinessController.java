@@ -4,6 +4,7 @@ import api.daos.DaoFactory;
 import api.dtos.GameDto;
 import api.entities.Game;
 import api.entities.Publisher;
+import api.exceptions.NotFoundException;
 
 public class GameBusinessController {
 
@@ -22,6 +23,22 @@ public class GameBusinessController {
         publisher.addGame(game.getId());
         DaoFactory.getFactory().getPublisherDao().save(publisher);
         return game.getId();
+    }
+
+    public Game getGame(String publisherId, String gameId) {
+        Game game;
+        if(publisherBusinessController.getPublisher(publisherId).hasGame(gameId)) {
+            return DaoFactory.getFactory().getGameDao().read(gameId).orElseThrow(
+                    () -> new NotFoundException("Publisher (" + gameId +")"));
+        }
+        else new NotFoundException("Game ("+ gameId+") not found for Publisher ("+publisherId+")");
+        return null;
+    }
+
+    public void updateName(GameDto gameDto) {
+        Game game = getGame(gameDto.getPublisherId(), gameDto.getId());
+        game.setName(gameDto.getName());
+        DaoFactory.getFactory().getGameDao().save(game);
     }
 
 }
