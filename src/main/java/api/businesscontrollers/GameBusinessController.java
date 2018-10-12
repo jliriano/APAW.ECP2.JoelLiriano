@@ -30,8 +30,7 @@ public class GameBusinessController {
             return DaoFactory.getFactory().getGameDao().read(gameId).orElseThrow(
                     () -> new NotFoundException("Game (" + gameId +")"));
         }
-        else new NotFoundException("Game ("+ gameId+") not found for Publisher ("+publisherId+")");
-        return null;
+        else throw new NotFoundException("Game ("+ gameId+") not found for Publisher ("+publisherId+")");
     }
 
     public void updateName(GameDto gameDto) {
@@ -45,8 +44,7 @@ public class GameBusinessController {
             Game game = DaoFactory.getFactory().getGameDao().read(gameId).orElseThrow(
                     () -> new NotFoundException("Game (" + gameId + ")"));
             return new GameDto(game);
-        } else new NotFoundException("Game ("+ gameId+") not found for Publisher ("+publisherId+")");
-        return null;
+        } else throw new NotFoundException("Game ("+ gameId+") not found for Publisher ("+publisherId+")");
     }
 
 }

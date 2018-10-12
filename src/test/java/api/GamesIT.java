@@ -94,8 +94,17 @@ public class GamesIT {
         HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
         +GameApiController.GAMES+"/"+gameId+GameApiController.NAME).body(new GameDto("NewGameName",null)).patch();
         new Client().submit(request);
-        //game = (GameDto) new Client().submit(this.getGame(publisherId, gameId)).getBody();
-        //assertEquals("NewGameName", game.getName());
+        game = (GameDto) new Client().submit(this.getGame(publisherId, gameId)).getBody();
+        assertEquals("NewGameName", game.getName());
+    }
+
+    @Test
+    void testPatchGameWrongGameId() {
+        String publisherId = this.createPublisher();
+        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
+                +GameApiController.GAMES+"/"+"1"+GameApiController.NAME).body(new GameDto("NewGameName", null)).patch();
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
+        assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }
 
     @Ignore
