@@ -1,7 +1,9 @@
 package api;
 
+import api.apicontrollers.GameApiController;
 import api.apicontrollers.PublisherApiController;
 import api.dtos.PublisherDto;
+import api.dtos.GameDto;
 import api.exceptions.ArgumentNotValidException;
 import api.exceptions.NotFoundException;
 import api.exceptions.RequestInvalidException;
@@ -15,6 +17,7 @@ public class Dispatcher {
     private static final String REQUEST_ERROR = "request error: ";
     private static final String METHOD_ERROR = "method error: ";
     private PublisherApiController publisherApiController = new PublisherApiController();
+    private GameApiController gameApiController = new GameApiController();
 
     public void submit(HttpRequest request, HttpResponse response) {
         String errorMessage = "{'error':'%S'}";
@@ -51,6 +54,10 @@ public class Dispatcher {
     private void doPost(HttpRequest request, HttpResponse response) {
         if (request.isEqualsPath(PublisherApiController.PUBLISHERS)) {
             response.setBody(this.publisherApiController.create((PublisherDto) request.getBody()));
+        } else if(request.isEqualsPath(PublisherApiController.PUBLISHERS+PublisherApiController.ID_ID+
+                GameApiController.GAMES)) {
+            response.setBody(this.gameApiController.create((GameDto) request.getBody()));
+
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod());
         }

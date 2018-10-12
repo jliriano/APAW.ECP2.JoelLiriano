@@ -19,4 +19,9 @@ public class PublisherBusinessController {
         return new PublisherDto(publisher);
     }
 
+    public Publisher getPublisher(String publisherId) {
+     return  DaoFactory.getFactory().getPublisherDao().read(publisherId).orElseThrow(
+                () -> new NotFoundException("Publisher (" + publisherId +")"));
+    }
+
 }

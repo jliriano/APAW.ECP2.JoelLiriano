@@ -14,4 +14,6 @@ public abstract class DaoFactory {
     }
 
     public abstract PublisherDao getPublisherDao();
+
+    public abstract GameDao getGameDao();
 }

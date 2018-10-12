@@ -2,16 +2,21 @@ package api.dtos;
 
 import api.entities.Publisher;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PublisherDto {
 
     private String id;
     private String name;
     private String website;
+    private List<String> games = new ArrayList<>();
 
     public PublisherDto(Publisher publisher) {
         this.name = publisher.getName();
         this.id = publisher.getId();
         this.website = publisher.getWebsite();
+        this.games = publisher.getGames();
     }
 
     public PublisherDto(String name) {
@@ -24,6 +29,14 @@ public class PublisherDto {
 
     public void setWebsite(String website){
         this.website = website;
+    }
+
+    public void addGame(String gameId) {
+        games.add(gameId);
+    }
+
+    public boolean hasGame(String gameId) {
+        return games.contains(gameId);
     }
 
     public String getName() {
@@ -41,8 +54,10 @@ public class PublisherDto {
     @Override
     public String toString() {
         return "PublisherDto{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", website='" + website + '\'' +
+                ", games=" + games +
                 '}';
     }
 }
