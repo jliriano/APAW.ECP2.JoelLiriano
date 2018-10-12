@@ -30,9 +30,9 @@ public class Dispatcher {
                     this.doGet(request, response);
                     break;
                 case PUT:
-                    this.doPatch(request, response);
-                case PATCH:
                     throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
+                case PATCH:
+                    this.doPatch(request, response);
                 case DELETE:
                     throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
                 default:

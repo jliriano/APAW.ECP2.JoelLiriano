@@ -6,6 +6,7 @@ import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
 import api.dtos.GameDto;
 import api.dtos.PublisherDto;
+import api.entities.Game;
 import http.Client;
 import http.HttpException;
 import http.HttpRequest;
@@ -77,10 +78,24 @@ public class GamesIT {
     @Test
     void testCreateGameWithoutGameDto() {
         String publisherId = this.createPublisher();
+        String gameId = this.createGame("GameName", publisherId, null, null);
         HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS
-                +"/"+publisherId+GameApiController.GAMES).body(null).post();
-        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+                +"/"+publisherId+GameApiController.GAMES +"/"+gameId+GameApiController.NAME)
+                .body(new GameDto("NewGameName",null)).patch();
+
+    }
+
+    @Test
+    void testPatchGameName() {
+        String publisherId = this.createPublisher();
+        String gameId = this.createGame("GameName", publisherId, null, null);
+        GameDto game = (GameDto) new Client().submit(this.getGame(publisherId, gameId)).getBody();
+        assertEquals("GameName", game.getName());
+        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
+        +GameApiController.GAMES+"/"+gameId).body(new GameDto("NewGameName",null)).patch();
+        new Client().submit(request);
+        game = (GameDto) new Client().submit(this.getGame(publisherId, gameId)).getBody();
+        assertEquals("NewGameName", game.getName());
     }
 
     @Ignore
@@ -96,6 +111,12 @@ public class GamesIT {
     @Ignore
     private HttpRequest getPublisher(String id) {
         return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+id).body("id:'"+id+"'").get();
+    }
+
+    @Ignore
+    private HttpRequest getGame(String publisherId, String gameId) {
+        return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId+
+                GameApiController.GAMES+"/"+gameId).get();
     }
 
     @Ignore
