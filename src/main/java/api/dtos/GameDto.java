@@ -1,20 +1,18 @@
 package api.dtos;
 
-import api.entities.Publisher;
-
 import java.time.LocalDateTime;
 
 public class GameDto {
 
     private String id;
     private String name;
-    private Publisher publisher;
+    private String publisherId;
     private LocalDateTime launchDate;
     private String gameRating;
 
-    public GameDto(String name, Publisher publisher) {
+    public GameDto(String name, String publisherId) {
         this.name = name;
-        this.publisher = publisher;
+        this.publisherId = publisherId;
     }
 
     public void setId(String id) {
@@ -41,8 +39,8 @@ public class GameDto {
         return name;
     }
 
-    public Publisher getPublisher() {
-        return publisher;
+    public String getPublisherId() {
+        return publisherId;
     }
 
     public LocalDateTime getLaunchDate() {
@@ -58,7 +56,7 @@ public class GameDto {
         return "GameDto{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", publisher=" + publisher +
+                ", publisher=" + publisherId +
                 ", launchDate=" + launchDate +
                 ", gameRating='" + gameRating + '\'' +
                 '}';

@@ -1,5 +1,6 @@
 package api;
 
+import api.apicontrollers.GameApiController;
 import api.apicontrollers.PublisherApiController;
 import api.dtos.PublisherDto;
 import api.exceptions.ArgumentNotValidException;
@@ -15,6 +16,7 @@ public class Dispatcher {
     private static final String REQUEST_ERROR = "request error: ";
     private static final String METHOD_ERROR = "method error: ";
     private PublisherApiController publisherApiController = new PublisherApiController();
+    private GameApiController gameApiController = new GameApiController();
 
     public void submit(HttpRequest request, HttpResponse response) {
         String errorMessage = "{'error':'%S'}";

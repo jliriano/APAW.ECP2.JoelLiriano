@@ -12,7 +12,7 @@ public class GameApiController extends BasicApiController {
     public String create(GameDto gameDto) {
         this.validate(gameDto, "gameDto");
         this.validate(gameDto.getName(), "GameDto Name");
-        this.validate(gameDto.getPublisher(), "GameDto Publisher");
+        this.validate(gameDto.getPublisherId(), "GameDto PublisherId");
         return this.gameBusinessController.create(gameDto);
     }
 
