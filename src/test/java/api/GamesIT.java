@@ -5,23 +5,17 @@ import api.apicontrollers.PublisherApiController;
 import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
 import api.dtos.GameDto;
-import api.dtos.PublisherDto;
-import api.entities.Game;
 import http.Client;
 import http.HttpException;
 import http.HttpRequest;
 import http.HttpStatus;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GamesIT {
-
-    private int publisherReference = 1;
+public class GamesIT extends CommonCore {
 
     @BeforeAll
     static void before() {
@@ -124,33 +118,6 @@ public class GamesIT {
                 +"/1"+GameApiController.NAME).body(null).patch();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.BAD_REQUEST,exception.getHttpStatus());
-    }
-
-    @Ignore
-    private String createGame(String name, String publisherId, LocalDateTime launchdDate, String gameRating) {
-        GameDto gameDto = new GameDto(name, publisherId);
-        gameDto.setLaunchDate(launchdDate);
-        gameDto.setGameRating(gameRating);
-        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
-                +GameApiController.GAMES).body(gameDto).post();
-        return (String) new Client().submit(request).getBody();
-    }
-
-    @Ignore
-    private HttpRequest getPublisher(String id) {
-        return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+id).body("id:'"+id+"'").get();
-    }
-
-    @Ignore
-    private HttpRequest getGame(String publisherId, String gameId) {
-        return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId+
-                GameApiController.GAMES+"/"+gameId).get();
-    }
-
-    @Ignore
-    private String createPublisher() {
-        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS).body(new PublisherDto("Publisher "+publisherReference++)).post();
-        return (String) new Client().submit(request).getBody();
     }
 
 }

@@ -8,16 +8,13 @@ import http.Client;
 import http.HttpException;
 import http.HttpRequest;
 import http.HttpStatus;
-import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class PublishersIT {
-
-    private int publisherReference = 1;
+class PublishersIT extends CommonCore {
 
     @BeforeAll
     static void before() {
@@ -69,14 +66,5 @@ class PublishersIT {
         HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/238").get();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
-    }
-
-    private HttpRequest getPublisher(String id) {
-        return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+id).body("id:'"+id+"'").get();
-    }
-
-    private String createPublisher() {
-        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS).body(new PublisherDto("Publisher "+publisherReference++)).post();
-        return (String) new Client().submit(request).getBody();
     }
 }
