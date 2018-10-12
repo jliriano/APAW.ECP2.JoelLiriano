@@ -26,7 +26,6 @@ public class GameBusinessController {
     }
 
     public Game getGame(String publisherId, String gameId) {
-        Game game;
         if(publisherBusinessController.getPublisher(publisherId).hasGame(gameId)) {
             return DaoFactory.getFactory().getGameDao().read(gameId).orElseThrow(
                     () -> new NotFoundException("Publisher (" + gameId +")"));
