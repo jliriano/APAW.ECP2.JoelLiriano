@@ -56,6 +56,7 @@ public class Publisher {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", website='" + website + '\'' +
+                ", games=" + games +
                 '}';
     }
 }
