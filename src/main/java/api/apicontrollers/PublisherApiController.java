@@ -2,7 +2,6 @@ package api.apicontrollers;
 
 import api.businesscontrollers.PublisherBusinessController;
 import api.dtos.PublisherDto;
-import api.exceptions.ArgumentNotValidException;
 
 public class PublisherApiController extends BasicApiController {
 

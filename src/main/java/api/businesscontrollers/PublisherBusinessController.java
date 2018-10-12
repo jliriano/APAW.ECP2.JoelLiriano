@@ -20,7 +20,7 @@ public class PublisherBusinessController {
     }
 
     public Publisher getPublisher(String publisherId) {
-     return  (Publisher) DaoFactory.getFactory().getPublisherDao().read(publisherId).orElseThrow(
+     return  DaoFactory.getFactory().getPublisherDao().read(publisherId).orElseThrow(
                 () -> new NotFoundException("Publisher (" + publisherId +")"));
     }
 
