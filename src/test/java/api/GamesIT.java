@@ -59,7 +59,7 @@ public class GamesIT {
         String publisherId = this.createPublisher();
         GameDto gameDto = new GameDto(null,publisherId);
         HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS
-                +"/"+publisherId+GameApiController.GAMES).body(null).post();
+                +"/"+publisherId+GameApiController.GAMES).body(gameDto).post();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
     }
@@ -69,7 +69,7 @@ public class GamesIT {
         String publisherId = this.createPublisher();
         GameDto gameDto = new GameDto("Game Name",null);
         HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS
-                +"/"+publisherId+GameApiController.GAMES).body(null).post();
+                +"/"+publisherId+GameApiController.GAMES).body(gameDto).post();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
     }
