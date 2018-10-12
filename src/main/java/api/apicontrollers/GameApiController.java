@@ -1,5 +1,8 @@
 package api.apicontrollers;
 
+import api.businesscontrollers.GameBusinessController;
+import api.dtos.GameDto;
+
 public class GameApiController extends BasicApiController {
 
     private static final String GAMES = "/games";
