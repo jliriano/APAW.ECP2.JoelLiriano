@@ -4,7 +4,7 @@ import api.businesscontrollers.PublisherBusinessController;
 import api.dtos.PublisherDto;
 import api.exceptions.ArgumentNotValidException;
 
-public class PublisherApiController {
+public class PublisherApiController extends BasicApiController {
 
     public static final String PUBLISHERS = "/publishers";
     public static final String ID_ID = "/{id}";
@@ -20,12 +20,6 @@ public class PublisherApiController {
     public PublisherDto read(String id) {
         this.validate(id, "PublisherId");
         return this.publisherBusinessController.read(id);
-    }
-
-    private void validate(Object property, String message) {
-        if (property == null) {
-            throw new ArgumentNotValidException(message + " is NULL");
-        }
     }
 
 }
