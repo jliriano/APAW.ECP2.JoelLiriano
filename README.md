@@ -49,7 +49,17 @@
 
 ---
 
-### PATCH /publishers/{id}/games/{id}
+### PATCH /publishers/{id}/games/{id}/name
+#### Parámetros del cuerpo
+- `name`: String (**requerido**)
+
+#### Respuesta
+- 200 OK 
+- 403 BAD_REQUEST
+- 404 NOT_FOUND
+
+---
+
 ### POST /publishers/{id}/reviews
 ### PUT /publishers/{id}/reviews/{id}
 ### DELETE /publishers/{id}/reviews/{id}
