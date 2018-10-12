@@ -28,4 +28,10 @@ public class GameApiController extends BasicApiController {
         this.gameBusinessController.updateName(gameDto);
     }
 
+    public GameDto read(String publisherId, String gameId) {
+        this.validate(publisherId, "PublisherId");
+        this.validate(gameId, "gameId");
+        return this.gameBusinessController.read(publisherId, gameId);
+    }
+
 }

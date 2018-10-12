@@ -28,7 +28,7 @@ public class GameBusinessController {
     public Game getGame(String publisherId, String gameId) {
         if(publisherBusinessController.getPublisher(publisherId).hasGame(gameId)) {
             return DaoFactory.getFactory().getGameDao().read(gameId).orElseThrow(
-                    () -> new NotFoundException("Publisher (" + gameId +")"));
+                    () -> new NotFoundException("Game (" + gameId +")"));
         }
         else new NotFoundException("Game ("+ gameId+") not found for Publisher ("+publisherId+")");
         return null;
@@ -38,6 +38,15 @@ public class GameBusinessController {
         Game game = getGame(gameDto.getPublisherId(), gameDto.getId());
         game.setName(gameDto.getName());
         DaoFactory.getFactory().getGameDao().save(game);
+    }
+
+    public GameDto read(String publisherId, String gameId) {
+        if(publisherBusinessController.getPublisher(publisherId).hasGame(gameId)) {
+            Game game = DaoFactory.getFactory().getGameDao().read(gameId).orElseThrow(
+                    () -> new NotFoundException("Game (" + gameId + ")"));
+            return new GameDto(game);
+        } else new NotFoundException("Game ("+ gameId+") not found for Publisher ("+publisherId+")");
+        return null;
     }
 
 }
