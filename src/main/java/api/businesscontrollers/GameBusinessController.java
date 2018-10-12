@@ -10,6 +10,8 @@ public class GameBusinessController {
 
     private PublisherBusinessController publisherBusinessController = new PublisherBusinessController();
 
+    private static final String GAME_NOT_FOUND = "Game not found for Publisher";
+
     public String create(GameDto gameDto) {
         Publisher publisher = publisherBusinessController.getPublisher(gameDto.getPublisherId());
         Game game = new Game(gameDto.getName(), publisher);
@@ -28,9 +30,9 @@ public class GameBusinessController {
     public Game getGame(String publisherId, String gameId) {
         if(publisherBusinessController.getPublisher(publisherId).hasGame(gameId)) {
             return DaoFactory.getFactory().getGameDao().read(gameId).orElseThrow(
-                    () -> new NotFoundException("Game (" + gameId +")"));
+                    () -> new NotFoundException("[" + gameId +"] "+GAME_NOT_FOUND+" ["+publisherId+"]"));
         }
-        else throw new NotFoundException("Game ("+ gameId+") not found for Publisher ("+publisherId+")");
+        else throw new NotFoundException("[" + gameId +"] "+GAME_NOT_FOUND+" ["+publisherId+"]");
     }
 
     public void updateName(GameDto gameDto) {
@@ -42,9 +44,9 @@ public class GameBusinessController {
     public GameDto read(String publisherId, String gameId) {
         if(publisherBusinessController.getPublisher(publisherId).hasGame(gameId)) {
             Game game = DaoFactory.getFactory().getGameDao().read(gameId).orElseThrow(
-                    () -> new NotFoundException("Game (" + gameId + ")"));
+                    () -> new NotFoundException("[" + gameId +"] "+GAME_NOT_FOUND+" ["+publisherId+"]"));
             return new GameDto(game);
-        } else throw new NotFoundException("Game ("+ gameId+") not found for Publisher ("+publisherId+")");
+        } else throw new NotFoundException("[" + gameId +"] "+GAME_NOT_FOUND+" ["+publisherId+"]");
     }
 
 }

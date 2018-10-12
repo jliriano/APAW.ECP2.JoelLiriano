@@ -76,8 +76,8 @@ public class Dispatcher {
     }
 
     private void doPatch(HttpRequest request) {
-        if (request.isEqualsPath(PublisherApiController.PUBLISHERS + publisherApiController.ID_ID
-        + gameApiController.GAMES + gameApiController.ID_ID + gameApiController.NAME)) {
+        if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
+        + GameApiController.GAMES + GameApiController.ID_ID + GameApiController.NAME)) {
             this.gameApiController.updateName(request.getPath(1), request.getPath(3), (GameDto) request.getBody());
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
