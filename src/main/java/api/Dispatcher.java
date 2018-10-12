@@ -1,33 +1,86 @@
 package api;
 
+import api.apicontrollers.GameApiController;
+import api.apicontrollers.PublisherApiController;
+import api.dtos.PublisherDto;
+import api.dtos.GameDto;
+import api.exceptions.ArgumentNotValidException;
+import api.exceptions.NotFoundException;
 import api.exceptions.RequestInvalidException;
 import http.HttpRequest;
 import http.HttpResponse;
 import http.HttpStatus;
+import org.apache.logging.log4j.LogManager;
 
 public class Dispatcher {
 
+    private static final String REQUEST_ERROR = "request error: ";
+    private static final String METHOD_ERROR = "method error: ";
+    private PublisherApiController publisherApiController = new PublisherApiController();
+    private GameApiController gameApiController = new GameApiController();
+
     public void submit(HttpRequest request, HttpResponse response) {
-        String ERROR_MESSAGE = "{'error':'%S'}";
+        String errorMessage = "{'error':'%S'}";
         try {
             switch (request.getMethod()) {
                 case POST:
-                    throw new RequestInvalidException("method error: " + request.getMethod());
+                    this.doPost(request, response);
+                    break;
                 case GET:
-                    throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+                    this.doGet(request, response);
+                    break;
                 case PUT:
-                    throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+                    throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
                 case PATCH:
-                    throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+                    this.doPatch(request);
+                    break;
                 case DELETE:
-                    throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+                    throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
                 default:
-                    throw new RequestInvalidException("method error: " + request.getMethod());
+                    throw new RequestInvalidException(METHOD_ERROR + request.getMethod());
             }
+        } catch (ArgumentNotValidException | RequestInvalidException exception) {
+            response.setBody(String.format(errorMessage, exception.getMessage()));
+            response.setStatus(HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException exception){
+            response.setBody(String.format(errorMessage, exception.getMessage()));
+            response.setStatus(HttpStatus.NOT_FOUND);
         } catch (Exception exception) {  // Unexpected
-            exception.printStackTrace();
-            response.setBody(String.format(ERROR_MESSAGE, exception));
+            LogManager.getLogger().error(exception.getStackTrace());
+            response.setBody(String.format(errorMessage, exception));
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private void doPost(HttpRequest request, HttpResponse response) {
+        if (request.isEqualsPath(PublisherApiController.PUBLISHERS)) {
+            response.setBody(this.publisherApiController.create((PublisherDto) request.getBody()));
+        } else if(request.isEqualsPath(PublisherApiController.PUBLISHERS+PublisherApiController.ID_ID+
+                GameApiController.GAMES)) {
+            response.setBody(this.gameApiController.create((GameDto) request.getBody()));
+
+        } else {
+            throw new RequestInvalidException(METHOD_ERROR + request.getMethod());
+        }
+    }
+
+    private void doGet(HttpRequest request, HttpResponse response) {
+        if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID)) {
+            response.setBody(this.publisherApiController.read(request.getPath(1)));
+        } else if(request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
+        +GameApiController.GAMES+GameApiController.ID_ID)) {
+            response.setBody(this.gameApiController.read(request.getPath(1), request.getPath(3)));
+        } else {
+            throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
+        }
+    }
+
+    private void doPatch(HttpRequest request) {
+        if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
+        + GameApiController.GAMES + GameApiController.ID_ID + GameApiController.NAME)) {
+            this.gameApiController.updateName(request.getPath(1), request.getPath(3), (GameDto) request.getBody());
+        } else {
+            throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
         }
     }
 
