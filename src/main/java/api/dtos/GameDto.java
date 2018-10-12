@@ -56,7 +56,7 @@ public class GameDto {
         return "GameDto{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", publisher=" + publisherId +
+                ", publisherId='" + publisherId + '\'' +
                 ", launchDate=" + launchDate +
                 ", gameRating='" + gameRating + '\'' +
                 '}';
