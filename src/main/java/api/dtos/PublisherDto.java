@@ -53,8 +53,10 @@ public class PublisherDto {
     @Override
     public String toString() {
         return "PublisherDto{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", website='" + website + '\'' +
+                ", games=" + games +
                 '}';
     }
 }
