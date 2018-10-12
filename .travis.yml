@@ -5,7 +5,6 @@ branches:
   only:
   - master
   - develop
-  - issue#03
 notifications:
   email:
     recipients:
