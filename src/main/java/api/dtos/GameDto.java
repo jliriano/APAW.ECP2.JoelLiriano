@@ -23,6 +23,10 @@ public class GameDto {
         this.name = name;
     }
 
+    public void setPublisherId(String publisherId) {
+        this.publisherId = publisherId;
+    }
+
     public void setLaunchDate(LocalDateTime launchDate) {
         this.launchDate = launchDate;
     }
