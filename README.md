@@ -36,6 +36,19 @@
 ---
 
 ### POST /publishers/{id}/games
+#### Parámetros del cuerpo
+- `name`: String (**requerido**)
+- `publisher`: Publisher (**requerido**)
+- `launchDate`: LolcalDateTime
+- `gameRating`: String
+
+#### Respuesta
+- 200 OK 
+  - `id`: String
+- 403 BAD_REQUEST
+
+---
+
 ### PATCH /publishers/{id}/games/{id}
 ### POST /publishers/{id}/reviews
 ### PUT /publishers/{id}/reviews/{id}
