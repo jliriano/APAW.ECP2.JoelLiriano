@@ -32,7 +32,8 @@ public class Dispatcher {
                 case PUT:
                     throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
                 case PATCH:
-                    this.doPatch(request, response);
+                    this.doPatch(request);
+                    break;
                 case DELETE:
                     throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
                 default:
@@ -74,7 +75,7 @@ public class Dispatcher {
         }
     }
 
-    private void doPatch(HttpRequest request, HttpResponse response) {
+    private void doPatch(HttpRequest request) {
         if (request.isEqualsPath(PublisherApiController.PUBLISHERS + publisherApiController.ID_ID
         + gameApiController.GAMES + gameApiController.ID_ID + gameApiController.NAME)) {
             this.gameApiController.updateName(request.getPath(1), request.getPath(3), (GameDto) request.getBody());
