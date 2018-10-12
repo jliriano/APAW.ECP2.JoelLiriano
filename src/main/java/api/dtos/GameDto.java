@@ -1,5 +1,7 @@
 package api.dtos;
 
+import api.entities.Game;
+
 import java.time.LocalDateTime;
 
 public class GameDto {
@@ -15,12 +17,24 @@ public class GameDto {
         this.publisherId = publisherId;
     }
 
+    public GameDto(Game game) {
+        this.id = game.getId();
+        this.name = game.getName();
+        this.publisherId = game.getPublisher().getId();
+        this.launchDate = game.getLaunchDate();
+        this.gameRating = game.getGameRating();
+    }
+
     public void setId(String id) {
         this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setPublisherId(String publisherId) {
+        this.publisherId = publisherId;
     }
 
     public void setLaunchDate(LocalDateTime launchDate) {

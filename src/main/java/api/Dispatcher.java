@@ -32,7 +32,8 @@ public class Dispatcher {
                 case PUT:
                     throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
                 case PATCH:
-                    throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
+                    this.doPatch(request);
+                    break;
                 case DELETE:
                     throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
                 default:
@@ -66,6 +67,18 @@ public class Dispatcher {
     private void doGet(HttpRequest request, HttpResponse response) {
         if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID)) {
             response.setBody(this.publisherApiController.read(request.getPath(1)));
+        } else if(request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
+        +GameApiController.GAMES+GameApiController.ID_ID)) {
+            response.setBody(this.gameApiController.read(request.getPath(1), request.getPath(3)));
+        } else {
+            throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
+        }
+    }
+
+    private void doPatch(HttpRequest request) {
+        if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
+        + GameApiController.GAMES + GameApiController.ID_ID + GameApiController.NAME)) {
+            this.gameApiController.updateName(request.getPath(1), request.getPath(3), (GameDto) request.getBody());
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
         }
