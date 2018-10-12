@@ -16,6 +16,7 @@ public class PublisherDto {
         this.name = publisher.getName();
         this.id = publisher.getId();
         this.website = publisher.getWebsite();
+        this.games = publisher.getGames();
     }
 
     public PublisherDto(String name) {
