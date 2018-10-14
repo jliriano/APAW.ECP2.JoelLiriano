@@ -69,6 +69,26 @@ public class ReviewBusinessControllerTest {
         assertEquals(false, review.isPendingApproval());
     }
 
+    @Test
+    void testUpdate() {
+        publisherId = publisherBusinessController.create(publisherDto);
+        reviewDto = new ReviewDto("Review message");
+        reviewDto.setReviewRating(8);
+        reviewDto.setTitle("My title");
+        reviewDto.setAuthor("John Doe");
+        reviewDto.setPendingApproval(false);
+        reviewId = reviewBusinessController.create(reviewDto, publisherId);
+        review = this.getReview(reviewId);
+        reviewDto = new ReviewDto(review);
+        reviewDto.setReviewMessage("Updated message");
+        reviewDto.setReviewRating(7);
+        reviewBusinessController.update(publisherId, reviewId, reviewDto);
+        review = this.getReview(reviewId);
+        assertEquals(reviewId, review.getId());
+        assertEquals("Updated message", review.getReviewMessage());
+        assertEquals(7, review.getReviewRating());
+    }
+
 
     @Ignore
     private Review getReview(String id) {
