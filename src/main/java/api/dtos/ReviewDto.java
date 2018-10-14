@@ -14,6 +14,7 @@ public class ReviewDto {
 
     public ReviewDto(String reviewMessage) {
         this.reviewMessage = reviewMessage;
+        this.pendingApproval = true;
     }
 
     public String getId() {

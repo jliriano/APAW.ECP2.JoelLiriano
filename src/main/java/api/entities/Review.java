@@ -14,7 +14,6 @@ public class Review {
 
     public Review(String reviewMessage, String title,
                   String author, int reviewRating, boolean pendingApproval) {
-        this.id = id;
         this.reviewMessage = reviewMessage;
         this.title = title;
         this.author = author;
