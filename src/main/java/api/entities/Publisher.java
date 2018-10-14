@@ -9,6 +9,7 @@ public class Publisher {
     private String name;
     private String website;
     private List<String> games = new ArrayList<>();
+    private List<String> reviews = new ArrayList<>();
 
     public Publisher(String name){
         this.name = name;
@@ -50,6 +51,18 @@ public class Publisher {
         return games;
     }
 
+    public void addReview(String reviewId) {
+        reviews.add(reviewId);
+    }
+
+    public boolean hasReview(String reviewId) {
+        return reviews.contains(reviewId);
+    }
+
+    public List<String> getReviews() {
+        return reviews;
+    }
+
     @Override
     public String toString() {
         return "Publisher{" +
@@ -57,6 +70,7 @@ public class Publisher {
                 ", name='" + name + '\'' +
                 ", website='" + website + '\'' +
                 ", games=" + games +
+                ", reviews=" + reviews +
                 '}';
     }
 }
