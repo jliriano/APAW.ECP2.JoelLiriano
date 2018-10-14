@@ -22,6 +22,17 @@ public class ReviewBusinessController {
         return review.getId();
     }
 
+    public void update(String publisherId, String reviewId, ReviewDto reviewDto) {
+        Publisher publisher = publisherBusinessController.getPublisher(publisherId);
+        this.processReviewDto(reviewDto);
+        Review review = new Review(reviewDto.getReviewMessage(), reviewDto.getTitle(),
+                reviewDto.getAuthor(), reviewDto.getReviewRating(), reviewDto.isPendingApproval());
+        review.setId(reviewId);
+        DaoFactory.getFactory().getReviewDao().save(review);
+        publisher.addReview(review.getId());
+        DaoFactory.getFactory().getPublisherDao().save(publisher);
+    }
+
     private void processReviewDto(ReviewDto reviewDto) {
         if(reviewDto.getAuthor()==null) {
             reviewDto.setAuthor("Anonymous");
