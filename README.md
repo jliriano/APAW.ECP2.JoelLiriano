@@ -26,7 +26,7 @@
 
 ---
 
-### GET /publishers/{dtoId}
+### GET /publishers/{id}
 #### Respuesta
 - 200 OK 
   - `{name:String,website:String}`: String
@@ -35,7 +35,7 @@
 
 ---
 
-### POST /publishers/{dtoId}/games
+### POST /publishers/{id}/games
 #### Parámetros del cuerpo
 - `name`: String (**requerido**)
 - `publisher`: Publisher (**requerido**)
@@ -49,7 +49,7 @@
 
 ---
 
-### PATCH /publishers/{dtoId}/games/{dtoId}/name
+### PATCH /publishers/{id}/games/{id}/name
 #### Parámetros del cuerpo
 - `name`: String (**requerido**)
 
@@ -60,7 +60,7 @@
 
 ---
 
-### POST /publishers/{dtoId}/reviews
+### POST /publishers/{id}/reviews
 #### Parámetros del cuerpo
 - `dtoReviewMessage`: String (**requerido**)
 - `dotTitle`: String
@@ -74,7 +74,7 @@
 
 ---
 
-### PUT /publishers/{dtoId}/reviews/{dtoId}
+### PUT /publishers/{id}/reviews/{id}
 #### Parámetros del cuerpo
 - `dtoReviewMessage`: String (**requerido**)
 - `dotTitle`: String
@@ -88,7 +88,7 @@
 
 ---
 
-### DELETE /publishers/{dtoId}/reviews/{dtoId}
+### DELETE /publishers/{id}/reviews/{id}
 #### Respuesta
 - 200 OK 
 
