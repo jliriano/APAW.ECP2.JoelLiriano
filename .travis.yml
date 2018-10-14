@@ -6,6 +6,7 @@ branches:
   - master
   - develop
   - release1.0
+  - issue#07
 notifications:
   email:
     recipients:

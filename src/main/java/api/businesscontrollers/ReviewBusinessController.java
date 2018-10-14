@@ -12,6 +12,8 @@ public class ReviewBusinessController {
 
     private PublisherBusinessController publisherBusinessController = new PublisherBusinessController();
     private static final String REVIEW_NOT_FOUND = "Review not found for Publisher";
+    private Review review;
+    private Publisher publisher;
 
     public String create(ReviewDto reviewDto, String publisherId) {
         Publisher publisher = publisherBusinessController.getPublisher(publisherId);
@@ -25,8 +27,8 @@ public class ReviewBusinessController {
     }
 
     public void update(String publisherId, String reviewId, ReviewDto reviewDto) {
-        Publisher publisher = publisherBusinessController.getPublisher(publisherId);
         this.read(publisherId, reviewId);
+        Publisher publisher = publisherBusinessController.getPublisher(publisherId);
         this.processReviewDto(reviewDto);
         Review review = new Review(reviewDto.getReviewMessage(), reviewDto.getTitle(),
                 reviewDto.getAuthor(), reviewDto.getReviewRating(), reviewDto.isPendingApproval());
@@ -50,9 +52,9 @@ public class ReviewBusinessController {
 
     public ReviewDto read(String publisherId, String reviewId) {
         if(publisherBusinessController.getPublisher(publisherId).hasReview(reviewId)) {
-            Review review = DaoFactory.getFactory().getReviewDao().read(reviewId).orElseThrow(
+            Review foundReview = DaoFactory.getFactory().getReviewDao().read(reviewId).orElseThrow(
                     () -> new NotFoundException("[" + reviewId +"] "+REVIEW_NOT_FOUND+" ["+publisherId+"]"));
-            return new ReviewDto(review);
+            return new ReviewDto(foundReview);
         } else throw new NotFoundException("[" + reviewId +"] "+REVIEW_NOT_FOUND+" ["+publisherId+"]");
     }
 
