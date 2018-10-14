@@ -33,7 +33,8 @@ public class Dispatcher {
                     this.doGet(request, response);
                     break;
                 case PUT:
-                    throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
+                    this.doPut(request);
+                    break;
                 case PATCH:
                     this.doPatch(request);
                     break;
@@ -76,6 +77,9 @@ public class Dispatcher {
         } else if(request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
         +GameApiController.GAMES+GameApiController.ID_ID)) {
             response.setBody(this.gameApiController.read(request.getPath(1), request.getPath(3)));
+        } else if(request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
+        + ReviewApiController.REVIEWS + ReviewApiController.ID_ID)) {
+            response.setBody(this.reviewApiController.read(request.getPath(1), request.getPath(3)));
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
         }
@@ -85,6 +89,15 @@ public class Dispatcher {
         if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
         + GameApiController.GAMES + GameApiController.ID_ID + GameApiController.NAME)) {
             this.gameApiController.updateName(request.getPath(1), request.getPath(3), (GameDto) request.getBody());
+        } else {
+            throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
+        }
+    }
+
+    private void doPut(HttpRequest request) {
+        if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
+        + ReviewApiController.REVIEWS + ReviewApiController.ID_ID)) {
+            this.reviewApiController.updateReview(request.getPath(1), request.getPath(3), (ReviewDto) request.getBody());
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
         }
