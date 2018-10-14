@@ -5,13 +5,13 @@ import api.apicontrollers.PublisherApiController;
 import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
 import api.dtos.GameDto;
-import http.Client;
-import http.HttpException;
-import http.HttpRequest;
-import http.HttpStatus;
+import api.entities.GameRating;
+import http.*;
 import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -118,6 +118,22 @@ public class GamesIT extends CommonCore {
                 +"/1"+GameApiController.NAME).body(null).patch();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.BAD_REQUEST,exception.getHttpStatus());
+    }
+
+    @Test
+    void testFindGameByCategory() {
+        String publisherId1 = this.createPublisher();
+        String publisherId2 = this.createPublisher();
+        String gameId1 = this.createGame("Game 1", publisherId1, null, GameRating.ADULTS_ONLY.toString());
+        String gameId2 = this.createGame("Game 2", publisherId1, null, GameRating.ADULTS_ONLY.toString());
+        String gameId3 = this.createGame("Game 3", publisherId1, null, GameRating.TEEN.toString());
+        String gameId4 = this.createGame("Game 4", publisherId2, null, GameRating.TEEN.toString());
+        String gameId5 = this.createGame("Game 5", publisherId2, null, GameRating.EVERYONE.toString());
+        String gameId6 = this.createGame("Game 6", publisherId2, null, GameRating.EVERYONE.toString());
+        HttpRequest request = HttpRequest.builder(GameApiController.GAMES+GameApiController.SEARCH).param("q","TEEN").get();
+        ArrayList<String> results = (ArrayList<String>) new Client().submit(request).getBody();
+        LogManager.getLogger().info(results.toString());
+        assertEquals(2, results.size());
     }
 
 }
