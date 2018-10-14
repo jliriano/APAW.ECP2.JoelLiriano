@@ -52,7 +52,7 @@ public class GameBusinessController {
         } else throw new NotFoundException("[" + gameId +"] "+GAME_NOT_FOUND+" ["+publisherId+"]");
     }
 
-    public ArrayList<String> findByCategory(String category) {
+    public List<String> findByCategory(String category) {
         ArrayList<String> results = new ArrayList<>();
         List<Game> games = DaoFactory.getFactory().getGameDao().findAll();
         for(Game g: games) {

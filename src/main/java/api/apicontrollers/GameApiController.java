@@ -5,7 +5,7 @@ import api.dtos.GameDto;
 import api.entities.GameRating;
 import api.exceptions.ArgumentNotValidException;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class GameApiController extends BasicApiController {
 
@@ -39,7 +39,7 @@ public class GameApiController extends BasicApiController {
         return this.gameBusinessController.read(publisherId, gameId);
     }
 
-    public ArrayList<String> findByCategory(String category) {
+    public List<String> findByCategory(String category) {
         this.validate(category, "Category");
         if(isValidCategory(category)) {
             return this.gameBusinessController.findByCategory(category);
