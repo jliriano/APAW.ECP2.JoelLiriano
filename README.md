@@ -21,12 +21,12 @@
 
 #### Respuesta
 - 200 OK 
-  - `id`: String
+  - `dtoId`: String
 - 403 BAD_REQUEST
 
 ---
 
-### GET /publishers/{id}
+### GET /publishers/{dtoId}
 #### Respuesta
 - 200 OK 
   - `{name:String,website:String}`: String
@@ -35,7 +35,7 @@
 
 ---
 
-### POST /publishers/{id}/games
+### POST /publishers/{dtoId}/games
 #### Parámetros del cuerpo
 - `name`: String (**requerido**)
 - `publisher`: Publisher (**requerido**)
@@ -44,12 +44,12 @@
 
 #### Respuesta
 - 200 OK 
-  - `id`: String
+  - `dtoId`: String
 - 403 BAD_REQUEST
 
 ---
 
-### PATCH /publishers/{id}/games/{id}/name
+### PATCH /publishers/{dtoId}/games/{dtoId}/name
 #### Parámetros del cuerpo
 - `name`: String (**requerido**)
 
@@ -60,26 +60,26 @@
 
 ---
 
-### POST /publishers/{id}/reviews
+### POST /publishers/{dtoId}/reviews
 #### Parámetros del cuerpo
-- `reviewMessage`: String (**requerido**)
-- `title`: String
-- `author`: String
-- `pendingApproval`: Boolean
+- `dtoReviewMessage`: String (**requerido**)
+- `dotTitle`: String
+- `dtoAuthor`: String
+- `dtoPendingApproval`: Boolean
 
 #### Respuesta
 - 200 OK 
-  - `id`: String
+  - `dtoId`: String
 - 403 BAD_REQUEST
 
 ---
 
-### PUT /publishers/{id}/reviews/{id}
+### PUT /publishers/{dtoId}/reviews/{dtoId}
 #### Parámetros del cuerpo
-- `reviewMessage`: String (**requerido**)
-- `title`: String
-- `author`: String
-- `pendingApproval`: Boolean
+- `dtoReviewMessage`: String (**requerido**)
+- `dotTitle`: String
+- `dtoAuthor`: String
+- `dtoPendingApproval`: Boolean
 
 #### Respuesta
 - 200 OK 
@@ -88,7 +88,7 @@
 
 ---
 
-### DELETE /publishers/{id}/reviews/{id}
+### DELETE /publishers/{dtoId}/reviews/{dtoId}
 #### Respuesta
 - 200 OK 
 
@@ -97,5 +97,5 @@
 
 ### GET /publishers/search?q=gameRating:{GAMERATING}
 - 200 OK 
-  - `[{id:String,name:String,publisherName:String,launchDate:LocalDateTime}]`
+  - `[{dtoId:String,name:String,publisherName:String,launchDate:LocalDateTime}]`
 - 403 BAD_REQUEST

@@ -43,11 +43,11 @@ public class ReviewApiControllerTest {
         reviewDto = new ReviewDto("Review message");
         reviewId = reviewApiController.create(reviewDto, publisherId);
         reviewDto = reviewApiController.read(publisherId, reviewId);
-        assertEquals("Review message", reviewDto.getReviewMessage());
-        assertEquals("Untitled", reviewDto.getTitle());
-        assertEquals("Anonymous", reviewDto.getAuthor());
-        assertEquals(true, reviewDto.isPendingApproval());
-        assertEquals(0, reviewDto.getReviewRating());
+        assertEquals("Review message", reviewDto.getDtoReviewMessage());
+        assertEquals("Untitled", reviewDto.getDotTitle());
+        assertEquals("Anonymous", reviewDto.getDtoAuthor());
+        assertEquals(true, reviewDto.isDtoPendingApproval());
+        assertEquals(0, reviewDto.getDtoReviewRating());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ReviewApiControllerTest {
     void testCreateExceptionInvalidRating() {
         publisherId = publisherBusinessController.create(publisherDto);
         reviewDto = new ReviewDto("Review message");
-        reviewDto.setReviewRating(99);
+        reviewDto.setDtoReviewRating(99);
         assertThrows(ArgumentNotValidException.class, () -> reviewApiController.create(reviewDto, publisherId));
     }
 

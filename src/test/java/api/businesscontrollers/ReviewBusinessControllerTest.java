@@ -5,7 +5,6 @@ import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
 import api.dtos.PublisherDto;
 import api.dtos.ReviewDto;
-import api.entities.Publisher;
 import api.entities.Review;
 import api.exceptions.ArgumentNotValidException;
 import api.exceptions.NotFoundException;
@@ -13,8 +12,6 @@ import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,10 +57,10 @@ public class ReviewBusinessControllerTest {
     void testCreateFull() {
         publisherId = publisherBusinessController.create(publisherDto);
         reviewDto = new ReviewDto("Review message");
-        reviewDto.setReviewRating(8);
-        reviewDto.setTitle("My title");
-        reviewDto.setAuthor("John Doe");
-        reviewDto.setPendingApproval(false);
+        reviewDto.setDtoReviewRating(8);
+        reviewDto.setDotTitle("My title");
+        reviewDto.setDtoAuthor("John Doe");
+        reviewDto.setDtoPendingApproval(false);
         reviewId = reviewBusinessController.create(reviewDto, publisherId);
         review = this.getReview(reviewId);
         assertEquals("Review message", review.getReviewMessage());
@@ -76,15 +73,15 @@ public class ReviewBusinessControllerTest {
     void testUpdate() {
         publisherId = publisherBusinessController.create(publisherDto);
         reviewDto = new ReviewDto("Review message");
-        reviewDto.setReviewRating(8);
-        reviewDto.setTitle("My title");
-        reviewDto.setAuthor("John Doe");
-        reviewDto.setPendingApproval(false);
+        reviewDto.setDtoReviewRating(8);
+        reviewDto.setDotTitle("My title");
+        reviewDto.setDtoAuthor("John Doe");
+        reviewDto.setDtoPendingApproval(false);
         reviewId = reviewBusinessController.create(reviewDto, publisherId);
         review = this.getReview(reviewId);
         reviewDto = new ReviewDto(review);
-        reviewDto.setReviewMessage("Updated message");
-        reviewDto.setReviewRating(7);
+        reviewDto.setDtoReviewMessage("Updated message");
+        reviewDto.setDtoReviewRating(7);
         reviewBusinessController.update(publisherId, reviewId, reviewDto);
         review = this.getReview(reviewId);
         assertEquals(reviewId, review.getId());
@@ -97,14 +94,14 @@ public class ReviewBusinessControllerTest {
         String nullMessage = null;
         publisherId = publisherBusinessController.create(publisherDto);
         reviewDto = new ReviewDto("Review message");
-        reviewDto.setReviewRating(8);
-        reviewDto.setTitle("My title");
-        reviewDto.setAuthor("John Doe");
-        reviewDto.setPendingApproval(false);
+        reviewDto.setDtoReviewRating(8);
+        reviewDto.setDotTitle("My title");
+        reviewDto.setDtoAuthor("John Doe");
+        reviewDto.setDtoPendingApproval(false);
         reviewId = reviewBusinessController.create(reviewDto, publisherId);
         review = this.getReview(reviewId);
         reviewDto = new ReviewDto(nullMessage);
-        reviewDto.setId(reviewId);
+        reviewDto.setDtoId(reviewId);
         assertThrows(ArgumentNotValidException.class, () -> reviewApiController.updateReview(publisherId, reviewId, reviewDto));
     }
 
@@ -112,10 +109,10 @@ public class ReviewBusinessControllerTest {
     void testDeleteReview() {
         publisherId = publisherBusinessController.create(publisherDto);
         reviewDto = new ReviewDto("Review message");
-        reviewDto.setReviewRating(8);
-        reviewDto.setTitle("My title");
-        reviewDto.setAuthor("John Doe");
-        reviewDto.setPendingApproval(false);
+        reviewDto.setDtoReviewRating(8);
+        reviewDto.setDotTitle("My title");
+        reviewDto.setDtoAuthor("John Doe");
+        reviewDto.setDtoPendingApproval(false);
         reviewId = reviewBusinessController.create(reviewDto, publisherId);
         reviewBusinessController.delete(publisherId, reviewId);
         assertThrows(NotFoundException.class, () -> reviewBusinessController.read(publisherId, reviewId));
