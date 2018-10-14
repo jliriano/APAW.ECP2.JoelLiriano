@@ -94,7 +94,7 @@
 
 ---
 
-### GET /publishers/search?q=gameRating:TEEN
+### GET /publishers/search?q=gameRating:{GAMERATING}
 - 200 OK 
   - `[{id:String,name:String,publisherName:String,launchDate:LocalDateTime}]`
 - 403 BAD_REQUEST
