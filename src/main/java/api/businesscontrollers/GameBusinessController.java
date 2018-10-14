@@ -6,6 +6,9 @@ import api.entities.Game;
 import api.entities.Publisher;
 import api.exceptions.NotFoundException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameBusinessController {
 
     private PublisherBusinessController publisherBusinessController = new PublisherBusinessController();
@@ -47,6 +50,17 @@ public class GameBusinessController {
                     () -> new NotFoundException("[" + gameId +"] "+GAME_NOT_FOUND+" ["+publisherId+"]"));
             return new GameDto(game);
         } else throw new NotFoundException("[" + gameId +"] "+GAME_NOT_FOUND+" ["+publisherId+"]");
+    }
+
+    public ArrayList<String> findByCategory(String category) {
+        ArrayList<String> results = new ArrayList<>();
+        List<Game> games = DaoFactory.getFactory().getGameDao().findAll();
+        for(Game g: games) {
+            if(g.getGameRating().equals(category)) {
+                results.add("{id:"+g.getId()+",name:"+g.getName()+",publisherName:"+g.getPublisher().getName()+",launchDate:"+g.getLaunchDate()+"}");
+            }
+        }
+        return results;
     }
 
 }

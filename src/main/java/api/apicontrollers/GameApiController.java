@@ -2,6 +2,8 @@ package api.apicontrollers;
 
 import api.businesscontrollers.GameBusinessController;
 import api.dtos.GameDto;
+import api.entities.GameRating;
+import api.exceptions.ArgumentNotValidException;
 
 import java.util.ArrayList;
 
@@ -38,7 +40,19 @@ public class GameApiController extends BasicApiController {
     }
 
     public ArrayList<String> findByCategory(String category) {
-        return this.gameBusinessController.findByCategory(category);
+        this.validate(category, "Category");
+        if(isValidCategory(category)) {
+            return this.gameBusinessController.findByCategory(category);
+        } else throw new ArgumentNotValidException("Not a valid Game Rating category for search");
+
+    }
+
+    public boolean isValidCategory(String category) {
+        for(GameRating rating: GameRating.values()) {
+            if(rating.name().equals(category)) {
+                return true;
+            }
+        } return false;
     }
 
 }
