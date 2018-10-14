@@ -37,4 +37,10 @@ public class ReviewApiController extends BasicApiController {
         return this.reviewBusinessController.read(publisherId, reviewId);
     }
 
+    public void delete(String publisherId, String reviewId) {
+        this.validate(publisherId, "publisherId");
+        this.validate(reviewId, "reviewId");
+        this.reviewBusinessController.delete(publisherId, reviewId);
+    }
+
 }

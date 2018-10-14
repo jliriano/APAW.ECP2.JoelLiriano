@@ -109,6 +109,19 @@ public class ReviewBusinessControllerTest {
     }
 
     @Test
+    void testDeleteReview() {
+        publisherId = publisherBusinessController.create(publisherDto);
+        reviewDto = new ReviewDto("Review message");
+        reviewDto.setReviewRating(8);
+        reviewDto.setTitle("My title");
+        reviewDto.setAuthor("John Doe");
+        reviewDto.setPendingApproval(false);
+        reviewId = reviewBusinessController.create(reviewDto, publisherId);
+        reviewBusinessController.delete(publisherId, reviewId);
+        assertThrows(NotFoundException.class, () -> reviewBusinessController.read(publisherId, reviewId));
+    }
+
+    @Test
     void testReadNotFound() {
         publisherId = publisherBusinessController.create(publisherDto);
         assertThrows(NotFoundException.class, () -> reviewBusinessController.read(publisherId, "3"));

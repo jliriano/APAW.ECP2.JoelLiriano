@@ -13,6 +13,7 @@ import http.HttpRequest;
 import http.HttpResponse;
 import http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
+import sun.misc.Request;
 
 public class Dispatcher {
 
@@ -39,7 +40,8 @@ public class Dispatcher {
                     this.doPatch(request);
                     break;
                 case DELETE:
-                    throw new RequestInvalidException(REQUEST_ERROR + request.getMethod() + ' ' + request.getPath());
+                    this.doDelete(request);
+                    break;
                 default:
                     throw new RequestInvalidException(METHOD_ERROR + request.getMethod());
             }
@@ -98,6 +100,15 @@ public class Dispatcher {
         if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
         + ReviewApiController.REVIEWS + ReviewApiController.ID_ID)) {
             this.reviewApiController.updateReview(request.getPath(1), request.getPath(3), (ReviewDto) request.getBody());
+        } else {
+            throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
+        }
+    }
+
+    private void doDelete(HttpRequest request) {
+        if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
+        + ReviewApiController.REVIEWS + ReviewApiController.ID_ID)) {
+            this.reviewApiController.delete(request.getPath(1), request.getPath(3));
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
         }

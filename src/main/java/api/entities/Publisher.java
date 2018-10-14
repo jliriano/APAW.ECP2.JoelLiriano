@@ -55,6 +55,10 @@ public class Publisher {
         reviews.add(reviewId);
     }
 
+    public void removeReview(String reviewId) {
+        reviews.remove(reviewId);
+    }
+
     public boolean hasReview(String reviewId) {
         return reviews.contains(reviewId);
     }
