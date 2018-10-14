@@ -2,10 +2,12 @@ package api;
 
 import api.apicontrollers.GameApiController;
 import api.apicontrollers.PublisherApiController;
+import api.apicontrollers.ReviewApiController;
 import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
 import api.dtos.GameDto;
 import api.dtos.PublisherDto;
+import api.dtos.ReviewDto;
 import http.Client;
 import http.HttpException;
 import http.HttpRequest;
@@ -35,6 +37,22 @@ public class DispatcherTest extends CommonCore {
         HttpRequest requestGame = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId+ GameApiController.GAMES)
                 .body(new GameDto("PostGame", publisherId)).post();
         assertEquals(HttpStatus.OK, new Client().submit(requestGame).getStatus());
+    }
+
+    @Test
+    void testPostReview() {
+        HttpRequest requestPublisher = HttpRequest.builder(PublisherApiController.PUBLISHERS).body(new PublisherDto("Publisher PostGame")).post();
+        String publisherId = (String) new Client().submit(requestPublisher).getBody();
+        HttpRequest requestReview = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
+                + ReviewApiController.REVIEWS).body( new ReviewDto("Review Message")).post();
+        assertEquals(HttpStatus.OK, new Client().submit(requestReview).getStatus());
+    }
+
+    @Test
+    void testPostReviewBadRequest() {
+        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/1"+ReviewApiController.REVIEWS).body(null).post();
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
     }
 
     @Test
