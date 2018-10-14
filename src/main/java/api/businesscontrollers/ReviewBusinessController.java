@@ -55,4 +55,10 @@ public class ReviewBusinessController {
         } else throw new NotFoundException("[" + reviewId +"] "+REVIEW_NOT_FOUND+" ["+publisherId+"]");
     }
 
+    public void delete(String publisherId, String reviewId) {
+        if(publisherBusinessController.getPublisher(publisherId).hasReview(reviewId)) {
+            DaoFactory.getFactory().getReviewDao().deleteById(reviewId);
+        }
+    }
+
 }
