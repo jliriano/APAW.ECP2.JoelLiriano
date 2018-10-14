@@ -96,7 +96,7 @@ public class Dispatcher {
     private void doPut(HttpRequest request) {
         if (request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
         + ReviewApiController.REVIEWS + ReviewApiController.ID_ID)) {
-            this.gameApiController.updateReview(request.getPath(1), request.getPath(3), (ReviewDto) request.getBody());
+            this.reviewApiController.updateReview(request.getPath(1), request.getPath(3), (ReviewDto) request.getBody());
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
         }
