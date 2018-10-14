@@ -151,4 +151,26 @@ public class ReviewsIT extends CommonCore {
         assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }
 
+    @Test
+    void testDeleteReview() {
+        String publisherId = this.createPublisher();
+        String reviewId = this.createReview(publisherId, "Review message", null, null, 0);
+        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
+        +ReviewApiController.REVIEWS+"/"+reviewId).delete();
+        new Client().submit(request);
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(this.getReview(publisherId, reviewId)));
+        assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
+    }
+
+    @Test
+    void testDeleteAlreadyDeletedReview() {
+        String publisherId = this.createPublisher();
+        String reviewId = this.createReview(publisherId, "Review message", null, null, 0);
+        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
+                +ReviewApiController.REVIEWS+"/"+reviewId).delete();
+        new Client().submit(request);
+        HttpResponse response = new Client().submit(request);
+        assertEquals(HttpStatus.OK, response.getStatus());
+    }
+
 }
