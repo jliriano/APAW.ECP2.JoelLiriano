@@ -8,6 +8,7 @@ import api.daos.memory.DaoMemoryFactory;
 import api.dtos.GameDto;
 import api.dtos.PublisherDto;
 import api.dtos.ReviewDto;
+import api.entities.Publisher;
 import http.Client;
 import http.HttpException;
 import http.HttpRequest;
@@ -154,6 +155,18 @@ public class DispatcherTest extends CommonCore {
         HttpRequest request = HttpRequest.builder("/METHODERROR").body(null).delete();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+    }
+
+    @Test
+    void testDeleteReview() {
+        HttpRequest requestPublisher = HttpRequest.builder(PublisherApiController.PUBLISHERS).body(new PublisherDto("Publisher PostGame")).post();
+        String publisherId = (String) new Client().submit(requestPublisher).getBody();
+        HttpRequest requestReview = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
+                + ReviewApiController.REVIEWS).body( new ReviewDto("Review Message")).post();
+        String reviewId = (String) new Client().submit(requestReview).getBody();
+        HttpRequest deleteReview = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
+                + ReviewApiController.REVIEWS + ReviewApiController.ID_ID ).delete();
+        assertEquals(HttpStatus.OK, new Client().submit(requestReview).getStatus());
     }
 
 }
