@@ -13,11 +13,9 @@ import http.HttpRequest;
 import http.HttpResponse;
 import http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
-import sun.misc.Request;
 
 public class Dispatcher {
 
-    private static final String REQUEST_ERROR = "request error: ";
     private static final String METHOD_ERROR = "method error: ";
     private PublisherApiController publisherApiController = new PublisherApiController();
     private GameApiController gameApiController = new GameApiController();
