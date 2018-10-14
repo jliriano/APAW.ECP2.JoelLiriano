@@ -31,4 +31,10 @@ public class ReviewApiController extends BasicApiController {
         }
     }
 
+    public ReviewDto read(String publisherId, String reviewId) {
+        this.validate(publisherId, "publisherId");
+        this.validate(reviewId,"reviewId");
+        return this.reviewBusinessController.read(publisherId, reviewId);
+    }
+
 }

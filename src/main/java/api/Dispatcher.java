@@ -79,6 +79,9 @@ public class Dispatcher {
         } else if(request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
         +GameApiController.GAMES+GameApiController.ID_ID)) {
             response.setBody(this.gameApiController.read(request.getPath(1), request.getPath(3)));
+        } else if(request.isEqualsPath(PublisherApiController.PUBLISHERS + PublisherApiController.ID_ID
+        + ReviewApiController.REVIEWS + ReviewApiController.ID_ID)) {
+            response.setBody(this.reviewApiController.read(request.getPath(1), request.getPath(3)));
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod() + ' ' + request.getPath());
         }

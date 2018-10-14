@@ -1,5 +1,7 @@
 package api.dtos;
 
+import api.entities.Review;
+
 import java.time.LocalDateTime;
 
 public class ReviewDto {
@@ -15,6 +17,16 @@ public class ReviewDto {
     public ReviewDto(String reviewMessage) {
         this.reviewMessage = reviewMessage;
         this.pendingApproval = true;
+    }
+
+    public ReviewDto(Review review) {
+        this.id = review.getId();
+        this.title = review.getTitle();
+        this.author = review.getAuthor();
+        this.reviewMessage = review.getReviewMessage();
+        this.reviewRating = review.getReviewRating();
+        this.publishedDate = review.getPublishedDate();
+        this.pendingApproval = review.isPendingApproval();
     }
 
     public String getId() {

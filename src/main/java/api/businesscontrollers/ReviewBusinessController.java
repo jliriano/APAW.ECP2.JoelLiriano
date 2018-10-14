@@ -4,12 +4,14 @@ import api.daos.DaoFactory;
 import api.dtos.ReviewDto;
 import api.entities.Publisher;
 import api.entities.Review;
+import api.exceptions.NotFoundException;
 
 import java.time.LocalDateTime;
 
 public class ReviewBusinessController {
 
     private PublisherBusinessController publisherBusinessController = new PublisherBusinessController();
+    private static final String REVIEW_NOT_FOUND = "Review not found for Publisher";
 
     public String create(ReviewDto reviewDto, String publisherId) {
         Publisher publisher = publisherBusinessController.getPublisher(publisherId);
@@ -43,6 +45,14 @@ public class ReviewBusinessController {
         if(reviewDto.getPublishedDate()==null) {
             reviewDto.setPublishedDate(LocalDateTime.now());
         }
+    }
+
+    public ReviewDto read(String publisherId, String reviewId) {
+        if(publisherBusinessController.getPublisher(publisherId).hasReview(reviewId)) {
+            Review review = DaoFactory.getFactory().getReviewDao().read(reviewId).orElseThrow(
+                    () -> new NotFoundException("[" + reviewId +"] "+REVIEW_NOT_FOUND+" ["+publisherId+"]"));
+            return new ReviewDto(review);
+        } else throw new NotFoundException("[" + reviewId +"] "+REVIEW_NOT_FOUND+" ["+publisherId+"]");
     }
 
 }
