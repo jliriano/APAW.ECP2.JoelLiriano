@@ -3,11 +3,13 @@ package api.daos.memory;
 import api.daos.DaoFactory;
 import api.daos.GameDao;
 import api.daos.PublisherDao;
+import api.daos.ReviewDao;
 
 public class DaoMemoryFactory extends DaoFactory {
 
     private PublisherDao publisherDao;
     private GameDao gameDao;
+    private ReviewDao reviewDao;
 
     @Override
     public PublisherDao getPublisherDao() {
@@ -24,4 +26,13 @@ public class DaoMemoryFactory extends DaoFactory {
         }
         return gameDao;
     }
+
+    @Override
+    public ReviewDao getReviewDao() {
+        if (reviewDao == null) {
+            reviewDao = new ReviewDaoMemory();
+        }
+        return reviewDao;
+    }
+
 }

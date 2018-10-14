@@ -11,12 +11,14 @@ public class PublisherDto {
     private String name;
     private String website;
     private List<String> games = new ArrayList<>();
+    private List<String> reviews = new ArrayList<>();
 
     public PublisherDto(Publisher publisher) {
         this.name = publisher.getName();
         this.id = publisher.getId();
         this.website = publisher.getWebsite();
         this.games = publisher.getGames();
+        this.reviews = publisher.getReviews();
     }
 
     public PublisherDto(String name) {
@@ -51,6 +53,14 @@ public class PublisherDto {
         return id;
     }
 
+    public void addReview(String reviewId) {
+        reviews.add(reviewId);
+    }
+
+    public boolean hasReview(String reviewId) {
+        return reviews.contains(reviewId);
+    }
+
     @Override
     public String toString() {
         return "PublisherDto{" +
@@ -58,6 +68,7 @@ public class PublisherDto {
                 ", name='" + name + '\'' +
                 ", website='" + website + '\'' +
                 ", games=" + games +
+                ", reviews=" + reviews +
                 '}';
     }
 }

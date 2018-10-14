@@ -2,8 +2,10 @@ package api;
 
 import api.apicontrollers.GameApiController;
 import api.apicontrollers.PublisherApiController;
+import api.apicontrollers.ReviewApiController;
 import api.dtos.GameDto;
 import api.dtos.PublisherDto;
+import api.dtos.ReviewDto;
 import http.Client;
 import http.HttpRequest;
 import jdk.nashorn.internal.ir.annotations.Ignore;
@@ -31,6 +33,20 @@ public class CommonCore {
     }
 
     @Ignore
+    protected String createReview(String publisherId, String reviewMessage,
+                                  String title, String author, int reviewRating) {
+        ReviewDto reviewDto = new ReviewDto(reviewMessage);
+        reviewDto.setDotTitle(title);
+        reviewDto.setDtoAuthor(author);
+        reviewDto.setDtoReviewRating(reviewRating);
+        reviewDto.setDtoPendingApproval(true);
+        reviewDto.setDtoPublishedDate(LocalDateTime.now());
+        HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
+        + ReviewApiController.REVIEWS).body(reviewDto).post();
+        return (String) new Client().submit(request).getBody();
+    }
+
+    @Ignore
     protected HttpRequest getPublisher(String id) {
         return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+id).body("id:'"+id+"'").get();
     }
@@ -39,5 +55,11 @@ public class CommonCore {
     protected HttpRequest getGame(String publisherId, String gameId) {
         return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId+
                 GameApiController.GAMES+"/"+gameId).get();
+    }
+
+    @Ignore
+    protected HttpRequest getReview(String publisherId, String reviewId) {
+        return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId+
+                ReviewApiController.REVIEWS+"/"+reviewId).get();
     }
 }
