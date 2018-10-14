@@ -57,7 +57,10 @@ public class ReviewBusinessController {
 
     public void delete(String publisherId, String reviewId) {
         if(publisherBusinessController.getPublisher(publisherId).hasReview(reviewId)) {
+            Publisher publisher = publisherBusinessController.getPublisher(publisherId);
             DaoFactory.getFactory().getReviewDao().deleteById(reviewId);
+            publisher.removeReview(reviewId);
+            DaoFactory.getFactory().getPublisherDao().save(publisher);
         }
     }
 
