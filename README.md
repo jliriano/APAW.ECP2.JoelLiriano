@@ -75,5 +75,18 @@
 ---
 
 ### PUT /publishers/{id}/reviews/{id}
+#### Parámetros del cuerpo
+- `reviewMessage`: String (**requerido**)
+- `title`: String
+- `author`: String
+- `pendingApproval`: Boolean
+
+#### Respuesta
+- 200 OK 
+- 403 BAD_REQUEST
+- 404 NOT_FOUND
+
+---
+
 ### DELETE /publishers/{id}/reviews/{id}
 ### GET /publishers/search?q=gameRating:TEEN
