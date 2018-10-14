@@ -10,13 +10,13 @@ public class ReviewApiController extends BasicApiController {
 
     private ReviewBusinessController reviewBusinessController = new ReviewBusinessController();
 
-    public String create(ReviewDto reviewDto) {
+    public String create(ReviewDto reviewDto, String publisherId) {
         this.validate(reviewDto, "ReviewDto");
         this.validate(reviewDto.getReviewMessage(), "ReviewMessage");
         if(reviewDto.getReviewRating()<0||reviewDto.getReviewRating()>10) {
             throw new ArgumentNotValidException("Review Rating must be between 1 and 10");
         }
-        return this.reviewBusinessController.create(reviewDto);
+        return this.reviewBusinessController.create(reviewDto, publisherId);
     }
 
 }

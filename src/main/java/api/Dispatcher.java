@@ -64,7 +64,7 @@ public class Dispatcher {
 
         } else if(request.isEqualsPath(PublisherApiController.PUBLISHERS+PublisherApiController.ID_ID+
                 ReviewApiController.REVIEWS)) {
-            response.setBody(this.reviewApiController.create((ReviewDto) request.getBody()));
+            response.setBody(this.reviewApiController.create((ReviewDto) request.getBody(), request.getPath(1)));
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod());
         }
