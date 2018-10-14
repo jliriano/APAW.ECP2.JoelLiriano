@@ -25,9 +25,11 @@ public class ReviewBusinessController {
     private void processReviewDto(ReviewDto reviewDto) {
         if(reviewDto.getAuthor()==null) {
             reviewDto.setAuthor("Anonymous");
-        } else if(reviewDto.getTitle()==null) {
+        }
+        if(reviewDto.getTitle()==null) {
             reviewDto.setTitle("Untitled");
-        } else if(reviewDto.getPublishedDate()==null) {
+        }
+        if(reviewDto.getPublishedDate()==null) {
             reviewDto.setPublishedDate(LocalDateTime.now());
         }
     }
