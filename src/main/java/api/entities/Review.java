@@ -12,7 +12,7 @@ public class Review {
     private LocalDateTime publishedDate;
     private boolean pendingApproval;
 
-    public Review(String id, String reviewMessage, String title,
+    public Review(String reviewMessage, String title,
                   String author, int reviewRating, boolean pendingApproval) {
         this.id = id;
         this.reviewMessage = reviewMessage;
