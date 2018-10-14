@@ -2,8 +2,10 @@ package api;
 
 import api.apicontrollers.GameApiController;
 import api.apicontrollers.PublisherApiController;
+import api.apicontrollers.ReviewApiController;
 import api.dtos.PublisherDto;
 import api.dtos.GameDto;
+import api.dtos.ReviewDto;
 import api.exceptions.ArgumentNotValidException;
 import api.exceptions.NotFoundException;
 import api.exceptions.RequestInvalidException;
@@ -18,6 +20,7 @@ public class Dispatcher {
     private static final String METHOD_ERROR = "method error: ";
     private PublisherApiController publisherApiController = new PublisherApiController();
     private GameApiController gameApiController = new GameApiController();
+    private ReviewApiController reviewApiController = new ReviewApiController();
 
     public void submit(HttpRequest request, HttpResponse response) {
         String errorMessage = "{'error':'%S'}";
@@ -59,6 +62,9 @@ public class Dispatcher {
                 GameApiController.GAMES)) {
             response.setBody(this.gameApiController.create((GameDto) request.getBody()));
 
+        } else if(request.isEqualsPath(PublisherApiController.PUBLISHERS+PublisherApiController.ID_ID+
+                ReviewApiController.REVIEWS)) {
+            response.setBody(this.reviewApiController.create((ReviewDto) request.getBody(), request.getPath(1)));
         } else {
             throw new RequestInvalidException(METHOD_ERROR + request.getMethod());
         }
