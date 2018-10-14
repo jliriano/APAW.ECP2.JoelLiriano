@@ -89,4 +89,9 @@
 ---
 
 ### DELETE /publishers/{id}/reviews/{id}
+#### Respuesta
+- 200 OK 
+
+---
+
 ### GET /publishers/search?q=gameRating:TEEN
