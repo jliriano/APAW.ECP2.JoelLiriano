@@ -36,11 +36,11 @@ public class CommonCore {
     protected String createReview(String publisherId, String reviewMessage,
                                   String title, String author, int reviewRating) {
         ReviewDto reviewDto = new ReviewDto(reviewMessage);
-        reviewDto.setTitle(title);
-        reviewDto.setAuthor(author);
-        reviewDto.setReviewRating(reviewRating);
-        reviewDto.setPendingApproval(true);
-        reviewDto.setPublishedDate(LocalDateTime.now());
+        reviewDto.setDotTitle(title);
+        reviewDto.setDtoAuthor(author);
+        reviewDto.setDtoReviewRating(reviewRating);
+        reviewDto.setDtoPendingApproval(true);
+        reviewDto.setDtoPublishedDate(LocalDateTime.now());
         HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
         + ReviewApiController.REVIEWS).body(reviewDto).post();
         return (String) new Client().submit(request).getBody();

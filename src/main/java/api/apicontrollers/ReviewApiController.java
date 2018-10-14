@@ -13,15 +13,15 @@ public class ReviewApiController extends BasicApiController {
 
     public String create(ReviewDto reviewDto, String publisherId) {
         this.validate(reviewDto, "ReviewDto");
-        this.validate(reviewDto.getReviewMessage(), "ReviewMessage");
-        this.validateReviewRating(reviewDto.getReviewRating());
+        this.validate(reviewDto.getDtoReviewMessage(), "ReviewMessage");
+        this.validateReviewRating(reviewDto.getDtoReviewRating());
         return this.reviewBusinessController.create(reviewDto, publisherId);
     }
 
     public void updateReview(String publisherId, String reviewId, ReviewDto reviewDto) {
         this.validate(reviewDto, "ReviewDto");
-        this.validate(reviewDto.getReviewMessage(), "ReviewMessage");
-        this.validateReviewRating(reviewDto.getReviewRating());
+        this.validate(reviewDto.getDtoReviewMessage(), "ReviewMessage");
+        this.validateReviewRating(reviewDto.getDtoReviewRating());
         this.reviewBusinessController.update(publisherId, reviewId, reviewDto);
     }
 

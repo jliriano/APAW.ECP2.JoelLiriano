@@ -123,6 +123,7 @@ public class GamesIT extends CommonCore {
 
     @Test
     void testFindGameByCategory() {
+        DaoFactory.setFactory(new DaoMemoryFactory());
         ArrayList<String> results;
         String publisherId1 = this.createPublisher();
         String publisherId2 = this.createPublisher();

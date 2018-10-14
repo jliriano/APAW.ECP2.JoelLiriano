@@ -40,4 +40,20 @@ public class PublisherDtoTest {
         assertEquals(publisher.hasGame("1"), publisherDto.hasGame("1"));
         assertEquals(publisher.hasGame("2"), publisherDto.hasGame("2"));
     }
+
+    @Test
+    void testPublisherDtoSetsAndGets() {
+        publisherDto = new PublisherDto(publisher);
+        publisherDto.setName("New name");
+        publisherDto.setWebsite("newsite.com");
+        publisherDto.addGame("1");
+        publisherDto.addReview("1");
+        assertEquals("New name", publisherDto.getName());
+        assertEquals("newsite.com", publisherDto.getWebsite());
+        assertEquals(true, publisherDto.hasGame("1"));
+        assertEquals(true, publisherDto.hasReview("1"));
+        assertEquals(false, publisherDto.hasGame("7"));
+        assertEquals(false, publisherDto.hasReview("7"));
+        assertEquals(String.class, publisherDto.toString().getClass());
+    }
 }

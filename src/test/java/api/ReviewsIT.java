@@ -1,15 +1,11 @@
 package api;
 
-import api.apicontrollers.GameApiController;
 import api.apicontrollers.PublisherApiController;
 import api.apicontrollers.ReviewApiController;
 import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
-import api.dtos.GameDto;
 import api.dtos.ReviewDto;
-import api.entities.Publisher;
 import http.*;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -57,7 +53,7 @@ public class ReviewsIT extends CommonCore {
         String publisherId = this.createPublisher();
         LogManager.getLogger().info("publisherId: "+publisherId);
         ReviewDto reviewDto = new ReviewDto("Review message");
-        reviewDto.setReviewRating(19);
+        reviewDto.setDtoReviewRating(19);
         HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS
                 +"/"+publisherId+ReviewApiController.REVIEWS).body(reviewDto).post();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
@@ -82,25 +78,25 @@ public class ReviewsIT extends CommonCore {
         String reviewId = this.createReview(publisherId, "This is my review message",
                 null, null, 0);
         ReviewDto review = (ReviewDto) new Client().submit(this.getReview(publisherId, reviewId)).getBody();
-        assertEquals("This is my review message", review.getReviewMessage());
-        assertEquals(reviewId,review.getId());
-        assertEquals("Anonymous", review.getAuthor());
-        assertEquals("Untitled",review.getTitle());
-        assertEquals(true, review.isPendingApproval());
-        review.setAuthor("Jon Snow");
-        review.setTitle("Westeros");
-        review.setReviewMessage("Updated review message");
-        review.setReviewRating(8);
-        review.setPendingApproval(false);
+        assertEquals("This is my review message", review.getDtoReviewMessage());
+        assertEquals(reviewId,review.getDtoId());
+        assertEquals("Anonymous", review.getDtoAuthor());
+        assertEquals("Untitled",review.getDotTitle());
+        assertEquals(true, review.isDtoPendingApproval());
+        review.setDtoAuthor("Jon Snow");
+        review.setDotTitle("Westeros");
+        review.setDtoReviewMessage("Updated review message");
+        review.setDtoReviewRating(8);
+        review.setDtoPendingApproval(false);
         HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId
         +ReviewApiController.REVIEWS+"/"+reviewId).body(review).put();
         new Client().submit(request);
         review = (ReviewDto) new Client().submit(this.getReview(publisherId, reviewId)).getBody();
-        assertEquals("Updated review message", review.getReviewMessage());
-        assertEquals(reviewId,review.getId());
-        assertEquals("Jon Snow", review.getAuthor());
-        assertEquals("Westeros",review.getTitle());
-        assertEquals(false, review.isPendingApproval());
+        assertEquals("Updated review message", review.getDtoReviewMessage());
+        assertEquals(reviewId,review.getDtoId());
+        assertEquals("Jon Snow", review.getDtoAuthor());
+        assertEquals("Westeros",review.getDotTitle());
+        assertEquals(false, review.isDtoPendingApproval());
     }
 
     @Test
@@ -124,7 +120,7 @@ public class ReviewsIT extends CommonCore {
         String reviewId = this.createReview(publisherId, "This is my review message",
                 null, null, 0);
         ReviewDto reviewDto = new ReviewDto("Updated message");
-        reviewDto.setReviewRating(33);
+        reviewDto.setDtoReviewRating(33);
         HttpRequest request = HttpRequest.builder(PublisherApiController.PUBLISHERS
                 +"/"+publisherId+ReviewApiController.REVIEWS+"/"+reviewId).body(reviewDto).put();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));

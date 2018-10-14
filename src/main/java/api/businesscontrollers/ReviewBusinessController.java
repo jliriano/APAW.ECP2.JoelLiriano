@@ -16,8 +16,8 @@ public class ReviewBusinessController {
     public String create(ReviewDto reviewDto, String publisherId) {
         Publisher publisher = publisherBusinessController.getPublisher(publisherId);
         this.processReviewDto(reviewDto);
-        Review review = new Review(reviewDto.getReviewMessage(), reviewDto.getTitle(),
-                reviewDto.getAuthor(), reviewDto.getReviewRating(), reviewDto.isPendingApproval());
+        Review review = new Review(reviewDto.getDtoReviewMessage(), reviewDto.getDotTitle(),
+                reviewDto.getDtoAuthor(), reviewDto.getDtoReviewRating(), reviewDto.isDtoPendingApproval());
         DaoFactory.getFactory().getReviewDao().save(review);
         publisher.addReview(review.getId());
         DaoFactory.getFactory().getPublisherDao().save(publisher);
@@ -28,22 +28,22 @@ public class ReviewBusinessController {
         this.read(publisherId, reviewId);
         Publisher publisher = publisherBusinessController.getPublisher(publisherId);
         this.processReviewDto(reviewDto);
-        Review review = new Review(reviewDto.getReviewMessage(), reviewDto.getTitle(),
-                reviewDto.getAuthor(), reviewDto.getReviewRating(), reviewDto.isPendingApproval());
+        Review review = new Review(reviewDto.getDtoReviewMessage(), reviewDto.getDotTitle(),
+                reviewDto.getDtoAuthor(), reviewDto.getDtoReviewRating(), reviewDto.isDtoPendingApproval());
         review.setId(reviewId);
         DaoFactory.getFactory().getReviewDao().save(review);
         publisher.addReview(review.getId());
     }
 
     private void processReviewDto(ReviewDto reviewDto) {
-        if(reviewDto.getAuthor()==null) {
-            reviewDto.setAuthor("Anonymous");
+        if(reviewDto.getDtoAuthor()==null) {
+            reviewDto.setDtoAuthor("Anonymous");
         }
-        if(reviewDto.getTitle()==null) {
-            reviewDto.setTitle("Untitled");
+        if(reviewDto.getDotTitle()==null) {
+            reviewDto.setDotTitle("Untitled");
         }
-        if(reviewDto.getPublishedDate()==null) {
-            reviewDto.setPublishedDate(LocalDateTime.now());
+        if(reviewDto.getDtoPublishedDate()==null) {
+            reviewDto.setDtoPublishedDate(LocalDateTime.now());
         }
     }
 
