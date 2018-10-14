@@ -3,11 +3,14 @@ package api.apicontrollers;
 import api.businesscontrollers.GameBusinessController;
 import api.dtos.GameDto;
 
+import java.util.ArrayList;
+
 public class GameApiController extends BasicApiController {
 
     public static final String GAMES = "/games";
     public static final String ID_ID = "/{id}";
     public static final String NAME = "/name";
+    public static final String SEARCH = "/search";
 
     private GameBusinessController gameBusinessController = new GameBusinessController();
 
@@ -32,6 +35,10 @@ public class GameApiController extends BasicApiController {
         this.validate(publisherId, "PublisherId");
         this.validate(gameId, "gameId");
         return this.gameBusinessController.read(publisherId, gameId);
+    }
+
+    public ArrayList<String> findByCategory(String category) {
+        return this.gameBusinessController.findByCategory(category);
     }
 
 }
