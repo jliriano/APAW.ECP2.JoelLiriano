@@ -56,4 +56,10 @@ public class CommonCore {
         return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId+
                 GameApiController.GAMES+"/"+gameId).get();
     }
+
+    @Ignore
+    protected HttpRequest getReview(String publisherId, String reviewId) {
+        return HttpRequest.builder(PublisherApiController.PUBLISHERS+"/"+publisherId+
+                ReviewApiController.REVIEWS+"/"+reviewId).get();
+    }
 }

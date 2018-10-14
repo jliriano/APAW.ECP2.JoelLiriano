@@ -26,6 +26,7 @@ public class ReviewBusinessController {
 
     public void update(String publisherId, String reviewId, ReviewDto reviewDto) {
         Publisher publisher = publisherBusinessController.getPublisher(publisherId);
+        this.read(publisherId, reviewId);
         this.processReviewDto(reviewDto);
         Review review = new Review(reviewDto.getReviewMessage(), reviewDto.getTitle(),
                 reviewDto.getAuthor(), reviewDto.getReviewRating(), reviewDto.isPendingApproval());
